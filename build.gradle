@@ -12,7 +12,8 @@ repositories {
 dependencies {
     compile group: 'edu.uci.ics', name: 'crawler4j', version: '4.2'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.22'
-    compile group: 'com.sleepycat', name: 'je', version: '5.0.84'
+//    compile group: 'com.sleepycat', name: 'je', version: '5.0.84'
+    compile group: 'com.sleepycat', name: 'je', version: '4.0.92'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     compile group: 'org.apache.tika', name: 'tika-parsers', version: '1.14'
     compile group: 'uk.org.lidalia', name: 'lidalia-slf4j-ext', version: '1.0.0-jdk6'
