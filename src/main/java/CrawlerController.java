@@ -1,3 +1,4 @@
+import Util.FolderCreator;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -9,8 +10,8 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
  */
 public class CrawlerController {
     public static void main(String[] args) throws Exception {
-//        String crawlStorageFolder = "/data/crawl/root";
-        String crawlStorageFolder = "/Users/ruixie/crawler";
+
+        String crawlStorageFolder = "/Users/ruixie/crawler/" + FolderCreator.getFolderName();
         int numberOfCrawlers = 7;
 
         CrawlConfig config = new CrawlConfig();
@@ -29,10 +30,7 @@ public class CrawlerController {
          * URLs that are fetched and then the crawler starts following links
          * which are found in these pages
          */
-        controller.addSeed("http://www.ics.uci.edu/~lopes/");
-        controller.addSeed("http://www.ics.uci.edu/~welling/");
-        controller.addSeed("http://www.ics.uci.edu/");
-
+        controller.addSeed("http://hr.tencent.com/social.php");
         /*
          * Start the crawl. This is a blocking operation, meaning that your code
          * will reach the line after this only when crawling is finished.
