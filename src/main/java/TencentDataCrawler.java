@@ -1,3 +1,4 @@
+import Model.Job;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -7,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import static java.awt.SystemColor.text;
 
 /**
  * Created by ruixie on 11/02/2017.
@@ -31,7 +30,7 @@ public class TencentDataCrawler extends WebCrawler {
     @Override
     public boolean shouldVisit(Page page, WebURL url) {
         String href = url.getURL().toLowerCase();
-        return !FILTERS.matcher(href).matches() && href.startsWith("http://hr.tencent.com/");
+        return !FILTERS.matcher(href).matches() && href.startsWith("http://hr.tencent.com/position");
     }
 
     @Override
@@ -40,6 +39,7 @@ public class TencentDataCrawler extends WebCrawler {
         myCrawlStat.incProcessedPages();
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData parseData = (HtmlParseData) page.getParseData();
+            myCrawlStat.getDataQueue().offer(new Job(parseData.getTitle(), parseData.getText(), page.getWebURL().getURL()));
             Set<WebURL> links = parseData.getOutgoingUrls();
             myCrawlStat.incTotalLinks(links.size());
             try {
@@ -67,14 +67,29 @@ public class TencentDataCrawler extends WebCrawler {
         dumpMyData();
     }
 
+    public String getDescription(String html) {
+        return null;
+    }
+
     public void dumpMyData() {
         BufferedWriter output = null;
         try {
-            output = new BufferedWriter(new FileWriter(outputFile));
-            output.write(myCrawlStat.getTotalProcessedPages());
-            output.close();
+            output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, true)));
+            while (!myCrawlStat.getDataQueue().isEmpty()) {
+                Job job = myCrawlStat.getDataQueue().poll();
+                output.write("=========================================\n");
+                output.write(job.getURL() + "\n");
+                output.write(job.getTitle() + "\n");
+                output.write(job.getContent() + "\n");
+            }
         } catch ( IOException e ) {
             e.printStackTrace();
+        } finally {
+            try {
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
