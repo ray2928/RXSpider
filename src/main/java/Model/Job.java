@@ -10,9 +10,9 @@ public class Job {
 
 
     public Job(String title, String content, String URL) {
-        this.title = title;
-        this.content = content;
-        this.URL = URL;
+        setTitle(title);
+        setURL(URL);
+        setContent(content);
     }
 
     public String getTitle() {

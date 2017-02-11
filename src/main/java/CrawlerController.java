@@ -1,4 +1,5 @@
 import Util.FolderCreator;
+import Util.Timer;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -44,6 +45,7 @@ public class CrawlerController {
          * will reach the line after this only when crawling is finished.
          */
 //        controller.start(TencentDataCrawler.class, numberOfCrawlers);
+        Timer timer = new Timer();
         CustomCrawlerFactory factory = new CustomCrawlerFactory(new File(outputPath));
         controller.start(factory, numberOfCrawlers);
 
@@ -63,6 +65,7 @@ public class CrawlerController {
         logger.info("\tProcessed Pages: {}", totalProcessedPages);
         logger.info("\tTotal Links found: {}", totalLinks);
         logger.info("\tTotal Text Size: {}", totalTextSize);
+        logger.info("\n{} Minutes used...", timer.getTimeForOperation());
     }
 
 }

@@ -35,11 +35,14 @@ public class TencentDataCrawler extends WebCrawler {
 
     @Override
     public void visit(Page page) {
-        logger.info("Visited: {}", page.getWebURL().getURL());
+        String URL = page.getWebURL().getURL();
+        logger.info("Visited: {}", URL);
         myCrawlStat.incProcessedPages();
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData parseData = (HtmlParseData) page.getParseData();
-            myCrawlStat.getDataQueue().offer(new Job(parseData.getTitle(), parseData.getText(), page.getWebURL().getURL()));
+            if (URL.contains("detail")) {
+                myCrawlStat.getDataQueue().offer(new Job(parseData.getTitle(), getContent(parseData.getText()), URL));
+            }
             Set<WebURL> links = parseData.getOutgoingUrls();
             myCrawlStat.incTotalLinks(links.size());
             try {
@@ -67,8 +70,8 @@ public class TencentDataCrawler extends WebCrawler {
         dumpMyData();
     }
 
-    public String getDescription(String html) {
-        return null;
+    public String getContent(String content) {
+        return content.substring(content.indexOf("客户服务类") + 5, content.indexOf("申请岗位")).trim();
     }
 
     public void dumpMyData() {
