@@ -10,7 +10,7 @@ public class FolderCreator {
     public static String getFolderName() {
         StringBuilder builder = new StringBuilder();
         LocalDateTime dayTime = new LocalDateTime();
-        builder.append(dayTime.getMonthOfYear() + "-"+ dayTime.getDayOfMonth() + "-" + dayTime.getHourOfDay() + "-" + dayTime.getMinuteOfHour());
+        builder.append(dayTime.getYear() + "-" + dayTime.getMonthOfYear() + "-"+ dayTime.getDayOfMonth() + "-" + dayTime.getHourOfDay() + "-" + dayTime.getMinuteOfHour());
         return builder.toString();
     }
 
