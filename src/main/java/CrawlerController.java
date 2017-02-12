@@ -21,7 +21,7 @@ public class CrawlerController {
 
         String crawlStorageFolder = "/Users/ruixie/crawler/" + FolderCreator.getFolderName();
         outputPath =  crawlStorageFolder + "/output.txt";
-        int numberOfCrawlers = 1;
+        int numberOfCrawlers = 7;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
